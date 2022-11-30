@@ -1,0 +1,32 @@
+----Create a Hardware Store Database "Tools"
+
+CREATE TABLE Tools (id INTEGER PRIMARY KEY, Name TEXT, Color TEXT, Price INTEGER, InStock INTEGER);
+
+INSERT INTO Tools VALUES
+(1, "Screwdriver Phillips", "Blue", 5, 50),
+(2, "Screwdriver Phillips", "Red", 5, 45),
+(3, "Screwdriver Phillips", "Green", 5, 38),
+(4, "Screwdriver Flathead", "Blue", 5, 47),
+(5, "Screwdriver Flathead", "Red", 5, 52),
+(6, "Screwdriver Flathead", "Green", 5, 35),
+(7, "Hammer", "Blue", 10, 100),
+(8, "Hammer", "Red", 10, 83),
+(9, "Hammer", "Green", 10, 40),
+(10, "Wrench", "Blue", 8, 72),
+(11, "Wrench", "Red", 8, 65),
+(12, "Wrench", "Green", 8, 23),
+(13, "Drill", "Blue", 40, 47),
+(14, "Drill", "Red", 40, 37),
+(15, "Drill", "Green", 40, 58);
+
+----display all items sold in store.
+SELECT * FROM Tools;
+
+----display items that are available in the color Red.
+SELECT * FROM Tools WHERE Color = "Red"
+
+----display total number of Hammers that are available to purchase (ie. "InStock").
+SELECT SUM(InStock) FROM Tools WHERE Name = "Hammer";
+
+----display which items have less than 40 units available, ordered by color type.
+SELECT Name, Color, InStock FROM Tools WHERE InStock <40 ORDER BY Color;
