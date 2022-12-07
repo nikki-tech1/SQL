@@ -1,0 +1,78 @@
+/* Below is a table with information about a small set of “famous people" */
+/* Two additional tables list details about where they work, and who they've dated */
+/* Below that are example queries that pulls information from all 3 tables, creating nice human readable lists. */
+
+CREATE TABLE Artists (id INTEGER PRIMARY KEY, fullname TEXT, age INTEGER, homestate TEXT, geography TEXT, jobtitle TEXT, genre TEXT);
+
+INSERT INTO Artists (fullname, age, homestate, geography, jobtitle, genre) VALUES
+("Ariana Grande", 29, "Florida", "East", "Singer", "Pop"),
+("Justin Bieber", 28, "Canada", "North", "Singer", "Pop"),
+("Lady Gaga", 36, "New York", "East", "Singer", "Pop"),
+("Bruno Mars", 37, "Hawaii", "West", "Singer", "R&B"),
+("Scooter Braun", 41, "Michigan", "North", "Producer", null), 
+("Timbaland", 50, "Florida", "East", "Producer", null),
+("Selena Gomez", 30, "Texas", "South", "Singer", "Pop"),
+("Selena Quintanilla", 23, "Texas", "South", "Singer", "Tejano"),
+("Big Sean", 45, "Michigan", "North", "Singer", "Rap"),
+("Jhene Aiko", 34, "Los Angeles", "West", "Singer", "R&B");
+
+
+CREATE TABLE RecordLabel (id INTEGER PRIMARY KEY, artist_id INTEGER, name TEXT);
+
+INSERT INTO RecordLabel (artist_id, name) VALUES
+(1, "Republic Records"),
+(2, "Republic Records"),
+(3, "Interscope"),
+(4, "Atlantic Records"),
+(5, "School Boy Records"),
+(6, "Interscope"),
+(7, "Interscope"),
+(8, "Capitol Records"),
+(9, "Def Jam"),
+(10,"Def Jam");
+
+CREATE TABLE DatingLife (id INTEGER PRIMARY KEY, artist_id1 INTEGER, artist_id2 INTEGER);
+
+INSERT INTO DatingLife (artist_id1, artist_id2) VALUES
+(1, 9),
+(9, 10),
+(7, 2);
+
+/* Write query to determine which Artists dated each other */
+SELECT a.fullname, b.fullname 
+FROM DatingLife
+JOIN artists as a
+ON DatingLife.artist_id1 = a.id
+JOIN artists as b
+ON Datinglife.artist_id2 = b.id;
+
+
+/* Write query to determine which Artists under age 40 and have worked under record label Republic Records OR Interscope */
+SELECT artists.fullname as Artist_Name, artists.age as Artist_Age, recordlabel.name as RecordLabel_Name
+FROM artists 
+JOIN recordlabel
+ON artists.id = recordlabel.artist_id
+WHERE artists.age < 40 
+AND (recordlabel.name = "Republic Records" OR recordlabel.name = "Interscope");
+
+
+/* Write query to determine the average age of artists at each record label */
+SELECT AVG(age) as Average_Age, recordlabel.name as RecordLabel
+FROM artists
+JOIN recordlabel
+ON artists.id = recordlabel.artist_id
+GROUP BY recordlabel.name;
+
+
+/* Write query to determine how many artists were discovered in each US geographic location (ie. north/south/east/west) */
+SELECT COUNT(artists.id) as Total_Artists, artists.geography as US_Location
+FROM artists
+GROUP BY geography;
+
+/* Write query to determine how many types of artists are at each record label */
+SELECT artists.jobtitle as Artist_Job, COUNT(artists.jobtitle) as Total_ArtistType, recordlabel.name as Record_Label
+FROM artists
+JOIN recordlabel
+ON artists.id = recordlabel.artist_id
+GROUP BY recordlabel.name, artists.jobtitle
+ORDER BY Record_Label;
