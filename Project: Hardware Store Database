@@ -1,4 +1,6 @@
-----Create a Hardware Store Database "Tools"
+/* Below is a table created for a mock Hardware Store Database titled "Tools" */
+/* Additionally, example queries that pull information from the table, creating nice human readable lists. */
+
 
 CREATE TABLE Tools (id INTEGER PRIMARY KEY, Name TEXT, Color TEXT, Price INTEGER, InStock INTEGER);
 
@@ -19,14 +21,14 @@ INSERT INTO Tools VALUES
 (14, "Drill", "Red", 40, 37),
 (15, "Drill", "Green", 40, 58);
 
-----display all items sold in store.
+/* Write query to display all items sold in store */
 SELECT * FROM Tools;
 
-----display items that are available in the color Red.
+/* Write query to display items that are available in the color Red */
 SELECT * FROM Tools WHERE Color = "Red"
 
-----display total number of Hammers that are available to purchase (ie. "InStock").
+/* Write query to display total number of Hammers that are available to purchase (ie. "InStock") */
 SELECT SUM(InStock) FROM Tools WHERE Name = "Hammer";
 
-----display which items have less than 40 units available, ordered by color type.
+/* Write query display which items have less than 40 units available, ordered by color type */
 SELECT Name, Color, InStock FROM Tools WHERE InStock <40 ORDER BY Color;
