@@ -1,6 +1,6 @@
 /* Below is a table with information about a small set of “famous people" */
 /* Two additional tables list details about where they work, and who they've dated */
-/* Below that are example queries that pulls information from all 3 tables, creating nice human readable lists. */
+/* Additionally, example queries that pull information from all 3 tables, creating nice human readable lists. */
 
 CREATE TABLE Artists (id INTEGER PRIMARY KEY, fullname TEXT, age INTEGER, homestate TEXT, geography TEXT, jobtitle TEXT, genre TEXT);
 
