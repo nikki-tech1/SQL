@@ -1,0 +1,29 @@
+/* In this SQL, I'm querying data more efficienty by utilizing a CTE (or "Common Table Expression") */
+
+/* Task: Calculate the average popularity for the artists in the Spotify data table. Then, for every artist with an average popularity of 90 or above, show their name, their average popularity, and label them as a “Top Star”. */
+
+WITH avg_pop_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData AS s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM avg_pop_CTE
+WHERE average_popularity>=90;
+
+/* Task: Let's say you work as a data analyst for your city, and your boss wants a list of all the bike lanes that have an average safety rating of 4.0 or higher. She also wants to see the average safety rating for each of those bike lanes, and a label that says "Safe Lane".*/
+
+WITH safety_average_cte AS (
+SELECT street, AVG(safetyrating) AS 'rating'
+FROM citybikelanes
+GROUP BY street
+)
+
+SELECT street,rating,'safe lane' AS 'label'
+FROM safety_average_cte
+WHERE rating >=4;
+
